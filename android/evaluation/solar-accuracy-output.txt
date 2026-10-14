@@ -1,0 +1,13 @@
+Reference check:  declination at the March equinox, 2026-03-20 14:46 UTC:  0.0023 deg
+Model series vs reference, 2026, at 12:00 UTC:  declination worst 0.44 deg, equation of time worst 47 s
+Model series vs reference, 2050, at 12:00 UTC:  declination worst 0.52 deg, equation of time worst 50 s
+Model series vs reference, 2096, at 12:00 UTC:  declination worst 0.75 deg, equation of time worst 53 s
+Model declination crosses zero (northward) at 2026-03-21 16:00 UTC, 25.2 h after the equinox
+
+|model - reference|, every date of 2026:  typical (median) / worst (date)
+Place          Model sunrise              Model sunset               Per-date Meeus sunrise     Per-date Meeus sunset     
+Miami           31 s /  92 s (03-14)       62 s / 100 s (08-29)        1 s /   3 s (04-21)       16 s /  32 s (09-14)     
+Indianapolis    57 s / 128 s (03-14)      101 s / 153 s (08-30)        2 s /   4 s (05-01)       31 s /  49 s (09-12)     
+Seattle         85 s / 167 s (03-14)      143 s / 205 s (08-31)        6 s /  14 s (02-21)       52 s /  74 s (09-10)     
+Anchorage      181 s / 262 s (03-10)      273 s / 348 s (08-25)       22 s /  41 s (02-11)      103 s / 135 s (08-24)     
+0N 0E           18 s /  42 s (01-14)       20 s /  53 s (01-11)        3 s /   8 s (12-22)        3 s /   7 s (12-23)     

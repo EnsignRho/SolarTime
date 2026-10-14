@@ -1,0 +1,1 @@
+/usr/bin/clang++ -g CMakeFiles/soltime_tests.dir/test_soltime.cpp.o -o soltime_tests  -lm 

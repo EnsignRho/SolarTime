@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'com.lebeli.soltime'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'com.lebeli.soltime'
+        minSdk 26
+        targetSdk 36
+        versionCode 1
+        versionName '1.0'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // Use the shared registry in the full repository, or the bundled snapshot when
+    // android/ is handed to an evaluator as a standalone project.
+    def sharedData = rootProject.file('../data')
+    def bundledData = rootProject.file('data')
+    def solTimeData = new File(sharedData, 'zones.tsv').isFile() ? sharedData : bundledData
+    ['places.tsv', 'countries.tsv', 'zones.tsv', 'ATTRIBUTION.md'].each { name ->
+        if (!new File(solTimeData, name).isFile()) {
+            throw new GradleException("Missing SolTime data: ${new File(solTimeData, name)}")
+        }
+    }
+    sourceSets {
+        main {
+            assets.srcDirs += [solTimeData]
+        }
+    }
+
+    // Only the data tables from that folder (not its script or notes)
+    androidResources {
+        ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:<dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~:!*.pl:!*.md'
+    }
+}
+
+// No dependencies at all:  plain Activity, LocationManager, GLES20 -- everything is
+// in the platform.  No AndroidX, no Play Services.

@@ -1,0 +1,1 @@
+/usr/bin/clang++ -g CMakeFiles/test_tree_ext.dir/test/test_tree_ext.cpp.o -o test_tree_ext  -Wl,-rpath,/home/rick/lebeli/time/build/tui libtui.so 

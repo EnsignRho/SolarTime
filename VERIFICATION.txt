@@ -1,0 +1,70 @@
+SolTime evaluation package — 2026-10-05, draft 3 — full-project checks
+
+Run October 5, 2026, 20:42-20:45 EDT, on a fresh copy of the package, outside the
+author's repository. Every source and data file checked here is byte-identical to the
+file of the same name listed in SHA256SUMS.
+
+Tools
+  Ubuntu clang 18.1.3, CMake 3.28.3, OpenJDK 21.0.11, Python 3.12.3, Perl 5.38.2
+  Android: Gradle 9.1.0 (wrapper), Android Gradle Plugin 9.0.1, Android SDK 36
+
+C++ build and tests (overview section 11.4 commands)
+  cmake -S . -B build-review -DCMAKE_BUILD_TYPE=Release     PASS (Clang 18.1.3 for C and C++)
+  cmake --build build-review -j2                            PASS, 0 compiler warnings
+  ctest --test-dir build-review --output-on-failure         PASS, 6 of 6
+      1 soltime                    core clock, basis, night window, zones, device clock
+      2 calendar_and_travel        Gregorian calendar and travel scenarios
+      3 review_regressions         October 5 corrections (BUG_FIX_PLAN_2026-10-05.md)
+      4 c_public_api               C11 client against an isolated copy of soltime.h
+      5 android_location           Java location policy and review regressions
+      6 publisher_recalculation    zone publisher input checks and recalculation
+  The desktop display (soltime_display) is not in the package.  With an unrelated
+  ../tui folder placed beside the package, CMake configured and left it out.
+
+C++ / Java differential test (difftest/run_difftest.sh)
+  PASS:  C and Java agree in all 20 comparison groups, each within compare.pl's tolerance.
+  Largest differences:  clock values 1.86e-09 s (DRIVE);  radius search 2.97e-08 km (RADIUS).
+  Nine groups show no difference at all, among them each of the 5,854 cities' lock
+  radius, ramp, J and leader (ZONE), the registry builds (REGISTRY, CREGISTRY) and the
+  follow, jet and stationary clock runs (FOLLOW, JET, STILL).
+  Rerun with ionice removed from PATH (as on macOS):  PASS, C and Java agree.
+
+Java evaluation programs (android/evaluation/, javac --release 17, JDK only)
+  OverviewExamples:  identical, byte for byte, to reference-output.txt (tzdb 2026a)
+  SolarAccuracy:     identical, byte for byte, to solar-accuracy-output.txt
+  Both under LC_ALL=en_US.UTF-8 and LC_ALL=C.
+
+Data
+  data/ and android/data/:  places.tsv, countries.tsv, zones.tsv, ATTRIBUTION.md identical.
+  zones.tsv:  5,854 city rows, 4,168 leaders.
+  Rebuilt from the October 3, 2026 source downloads with the package's own tools:
+      perl data/make_places.pl <geonames dir> <out>        places.tsv, countries.tsv IDENTICAL
+      perl data/make_zones.pl ... zones_raw.tsv
+      soltime_zonetool zones_raw.tsv zones.tsv             zones.tsv IDENTICAL
+  Source files used (SHA-256):
+      b58b72eb61d6f17e1d316e10ce8703c446ca3540acf9a36b4700472956e387a5  GHS_UCDB_THEME_GENERAL_CHARACTERISTICS_GLOBE_R2024A.gpkg
+      ac101507007c207bda757db7ea2aff36007b133f449ba1c97cdc4380828dbe25  2023_Gaz_place_national.txt
+      9a4e1de6e068eefff85a1a34bd6c7e514a7a980e38b1b6c61d9b7604c57b57b5  cities15000.txt
+      1da92a6323a5fec3176f3f743bf4cf4040fd56a876da55e46fbca23c863aa60a  admin1CodesASCII.txt
+      93bafc525813f22e4711ff9ed6d626343094ce48c26388dc7c49189b3d7d5512  countryInfo.txt
+  The download URLs are in the headers of data/make_places.pl and data/make_zones.pl.
+  Upstream files can change; a later download may not reproduce these tables exactly.
+
+Android (details in android/evaluation/verification.txt)
+  Empty Gradle home:  the wrapper downloaded Gradle 9.1.0 and verified its published
+  SHA-256 (drafts 1 and 2 shipped a mistyped checksum that failed this step).
+  In the package, online with dependencies downloaded fresh:  assembleDebug and
+  lintDebug PASS, lint 0 errors, 5 warnings.
+  A copy of android/ alone, offline from the filled Gradle home:  PASS, 0 errors,
+  4 warnings (the fifth, "a newer Gradle is available", needs the network).
+  APK data tables and earth.jpg match the source bytes.
+  No APK is included in the package; the app is provided in source-code form.
+
+Not rerun for draft 3
+  The address/undefined-behavior sanitizer runs and the desktop offscreen rendering
+  reported in BUG_FIX_PLAN_2026-10-05.md.
+
+Not established by these checks
+  Physical-phone behavior, accessibility, battery use; independent astronomical
+  validation beyond the overview's section 5.1 comparison; field or human-factors
+  evidence; formal conformance.

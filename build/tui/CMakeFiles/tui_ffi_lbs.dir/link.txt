@@ -1,0 +1,1 @@
+/usr/bin/clang++ -fPIC -g -shared -Wl,-soname,libtui_ffi_lbs.so -o libtui_ffi_lbs.so CMakeFiles/tui_ffi_lbs.dir/tui_ffi_lbs.cpp.o  /usr/lib/x86_64-linux-gnu/libqd.so 

@@ -1,0 +1,1 @@
+/usr/bin/clang++ -g CMakeFiles/test_menugate.dir/test/test_menugate.cpp.o -o test_menugate  -Wl,-rpath,/home/rick/lebeli/time/build/tui libtui.so 

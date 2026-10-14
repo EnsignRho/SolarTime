@@ -1,0 +1,1 @@
+/usr/bin/clang++ -fPIC -g -shared -Wl,-soname,libtui_ffi.so -o libtui_ffi.so CMakeFiles/tui_ffi.dir/tui_ffi.cpp.o CMakeFiles/tui_ffi.dir/tui_ffi_img.cpp.o CMakeFiles/tui_ffi.dir/tui_ffi_hex.cpp.o CMakeFiles/tui_ffi.dir/tui_edit_state_ffi.cpp.o  -Wl,-rpath,/home/rick/lebeli/time/build/tui libtui.so 

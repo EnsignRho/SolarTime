@@ -1,0 +1,1 @@
+/usr/bin/clang++ -g CMakeFiles/test_offscreen.dir/test/test_offscreen.cpp.o -o test_offscreen  -Wl,-rpath,/home/rick/lebeli/time/build/tui libtui.so 

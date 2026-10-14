@@ -1,0 +1,50 @@
+SolTime evaluation package — 2026-10-05, draft 3 — Android checks
+
+Run October 5, 2026, 20:43-20:45 EDT, on fresh copies outside the author's repository.
+OpenJDK 21.0.11, Gradle 9.1.0 (wrapper), Android Gradle Plugin 9.0.1, Android SDK 36.
+
+(1) Wrapper, empty Gradle home (GRADLE_USER_HOME = a new, empty folder):
+  ./gradlew --version:  PASS.  The wrapper downloaded gradle-9.1.0-bin.zip and verified
+  it against distributionSha256Sum, Gradle's published checksum
+  a17ddd85a26b6a7f5ddb71ff8b05fc5104c0202c6e64782429790c933686c806.
+  (Drafts 1 and 2 carried three extra characters in that checksum, so the wrapper
+  refused a fresh download.  Their checks used an already-cached Gradle with
+  --offline, which skips the download and its verification.)
+
+(2) Inside the package, the same Gradle home, network access, NO --offline:
+  every build dependency downloaded fresh;  Gradle reads the package's data/.
+  assembleDebug: PASS
+  lintDebug: PASS, 0 errors, 5 warnings
+
+(3) A copy of android/ alone, the same (now filled) Gradle home, --offline:
+  Gradle reads android/data/.
+  assembleDebug: PASS
+  lintDebug: PASS, 0 errors, 4 warnings (the Gradle-version check needs the network)
+
+In both builds the APK's places.tsv, countries.tsv, zones.tsv and earth.jpg match the
+source bytes.  Root data/ and android/data/ are identical.  Registry:  5,854 city
+rows;  4,168 distinct leader rows.  The APKs were built only as a check.  No APK is
+included in the package:  the app is provided in source-code form for evaluation.
+
+Lint warnings (existing, not suppressed):
+  AndroidGradlePluginVersion: a newer Gradle (9.8.0) is available; online runs only.
+  LockedOrientationActivity: portrait-only activity.
+  DiscouragedApi: fixed orientation behavior on newer Android versions.
+  ClickableViewAccessibility: GlobeView has no performClick override.
+  SetTextI18n: hardcoded New Time Zone string.
+
+Java evaluation programs (javac --release 17, run on JDK 21, no Android):
+  OverviewExamples:  output identical, byte for byte, to evaluation/reference-output.txt
+  under LC_ALL=en_US.UTF-8 and LC_ALL=C (tzdb 2026a).
+  SolarAccuracy:  output identical to evaluation/solar-accuracy-output.txt, both locales.
+  Input coordinates are supplied GeoNames place records.
+
+Scope:
+  No SolTime calculation algorithm or data table changed in draft 3.
+  The full-project checks (CTest, C++/Java differential test, data rebuild) are in
+  the package's VERIFICATION.txt.
+  No phone/emulator field, accessibility, battery or lifecycle validation.
+  No independent astronomical validation beyond overview section 5.1; no universal
+  conformance claim.
+
+The package's SHA256SUMS identifies the included source, data and documents.

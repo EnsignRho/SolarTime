@@ -1,0 +1,1 @@
+/usr/bin/clang++ -g CMakeFiles/test_zorder.dir/test/test_zorder.cpp.o -o test_zorder  -Wl,-rpath,/home/rick/lebeli/time/build/tui libtui.so 

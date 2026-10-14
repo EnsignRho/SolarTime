@@ -1,0 +1,1 @@
+/usr/bin/clang++ -g CMakeFiles/soltime_display.dir/soltime_display.cpp.o -o soltime_display  -Wl,-rpath,/home/rick/lebeli/time/build:/home/rick/lebeli/time/build/tui libsoltime.so tui/libtui.so -lm 

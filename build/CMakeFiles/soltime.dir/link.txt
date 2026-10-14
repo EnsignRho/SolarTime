@@ -1,0 +1,1 @@
+/usr/bin/clang++ -fPIC -g -shared -Wl,-soname,libsoltime.so -o libsoltime.so CMakeFiles/soltime.dir/soltime.cpp.o  -lm 

@@ -1,0 +1,1 @@
+/usr/bin/clang++ -g CMakeFiles/test_gui_samples.dir/test/test_gui_samples.cpp.o -o test_gui_samples  -Wl,-rpath,/home/rick/lebeli/time/build/tui libtui.so /usr/lib/x86_64-linux-gnu/libfreetype.so -lm 
